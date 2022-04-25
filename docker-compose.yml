@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+  local-data-api:
+    build: .
+    restart: always
+    environment:
+      ENGINE: PostgreSQLJDBC
+      POSTGRES_HOST: localhost
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: gadb
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      PGPASSWORD: postgres
+      POSTGRES_DB: gadb
+      TZ: "Asia/Tokyo"
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
+volumes:
+  postgres:
